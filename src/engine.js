@@ -8,6 +8,7 @@ class GameEngine {
     this.gameID = null;
     this.codenames = [];
     this.mode = null;
+    this.difficulty = null;
     this.turn = 0;
     this.cluesA = [];
     this.cluesB = [];
@@ -16,11 +17,13 @@ class GameEngine {
     this.whoAmI = 'A';
   }
 
-  init(gameID, mode = 'classic') {
+  init(gameID, mode, difficulty) {
     this.reset();
 
     this.gameID = gameID;
     this.mode = mode;
+    this.difficulty = difficulty;
+
     this.setup();
     return this.state();
   }
@@ -31,8 +34,9 @@ class GameEngine {
 
   state() {
     return {
-      mode: this.mode,
       gameID: this.gameID,
+      mode: this.mode,
+      difficulty: this.difficulty,
       codenames: this.codenames,
       keyCard: this.keyCard,
     };
@@ -41,8 +45,10 @@ class GameEngine {
   update(data) {
     console.log('%cUpdating game...', 'background:LemonChiffon', data);
     this.gameID = data.gameID;
-    this.codenames = data.codenames;
     this.mode = data.mode;
+    this.difficulty = data.difficulty;
+
+    this.codenames = data.codenames;
     this.turn = data.turn;
     this.cluesA = data.cluesA;
     this.cluesB = data.cluesB;

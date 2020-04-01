@@ -4,6 +4,7 @@ import { Container, LinearProgress } from '@material-ui/core';
 import useGlobalState from '../useGlobalState';
 
 import Home from './Home';
+import Toast from './Toast';
 
 const App = (props) => {
   // Global States
@@ -15,6 +16,7 @@ const App = (props) => {
       <Container maxWidth="lg">
         <Home />
       </Container>
+      <Toast />
     </Fragment>
   );
 };

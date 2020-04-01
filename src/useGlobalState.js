@@ -9,6 +9,10 @@ const initialState = {
   game: GameEngine.state(),
   dbRef: null,
   screen: 'home',
+  toast: {
+    isVisible: false,
+    message: '',
+  },
 };
 
 const { useGlobalState } = createGlobalState(initialState);

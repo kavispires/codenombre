@@ -18,35 +18,56 @@ const HomeCreate = ({ setTempGameID }) => {
   // Global States
   const [isLoading, setIsLoading] = useGlobalState('isLoading');
   const [, setScreen] = useGlobalState('screen');
+  const [toast, setToast] = useGlobalState('toast');
   // Local States
   const [gameMode, setGameMode] = useState('classic');
+  const [gameDifficulty, setGameDifficulty] = useState('normal');
 
   const createGame = () => {
     setIsLoading(true);
     const id = generadeID();
-    const state = GameEngine.init(id, gameMode);
+    const state = GameEngine.init(id, gameMode, gameDifficulty);
 
-    API.ref('/codenombre').update({
-      [id]: {
-        ...state,
-      },
-    });
-
-    setTempGameID(id);
-    setIsLoading(false);
-    setScreen('home');
+    try {
+      API.ref('/codenombre').update({
+        [id]: {
+          ...state,
+        },
+      });
+      setTempGameID(id);
+      setToast({ ...toast, isVisible: true, message: `Game created successfully. ID: ${id}` });
+      setIsLoading(false);
+      setScreen('home');
+    } catch {
+      setToast({ ...toast, isVisible: true, message: `Creating game has failed` });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="home-section create-game">
       <FormControl component="fieldset">
-        <FormLabel component="legend">Game Type</FormLabel>
+        <FormLabel component="legend" className="create-game-label">
+          Game Type
+        </FormLabel>
         <RadioGroup name="game-type" value={gameMode} onChange={(e) => setGameMode(e.target.value)}>
           <FormControlLabel value="classic" control={<Radio />} label="Classic" />
           <FormControlLabel value="simple" disabled control={<Radio />} label="Simple" />
           <FormControlLabel value="pictures" disabled control={<Radio />} label="Pictures" />
           <FormControlLabel value="dixit" disabled control={<Radio />} label="Dixit" />
           <FormControlLabel value="deception" disabled control={<Radio />} label="Deception" />
+        </RadioGroup>
+        <FormLabel component="legend" className="create-game-label">
+          Difficulty
+        </FormLabel>
+        <RadioGroup
+          name="game-difficulty"
+          value={gameDifficulty}
+          onChange={(e) => setGameDifficulty(e.target.value)}
+        >
+          <FormControlLabel value="easy" control={<Radio />} label="Easy" />
+          <FormControlLabel value="normal" control={<Radio />} label="Normal" />
         </RadioGroup>
       </FormControl>
       <Button

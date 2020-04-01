@@ -54,10 +54,6 @@ body {
   justify-content: center;
 }
 
-.create-game {
-  background: aquamarine;
-}
-
 .home-secion--separator {
   text-align: center;
   margin-bottom: 16px;
@@ -65,9 +61,8 @@ body {
   font-weight: bold;
 }
 
-.game-id-error {
-  font-size: 80%;
-  color: #dc004e;
+.create-game-label {
+  margin-top: 8px;
 }
 
 .game-chat {

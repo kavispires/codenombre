@@ -4,7 +4,6 @@
 }
 
 .home-content {
-  // background: hotpink;
   width: 50%;
   max-width: 300px;
   margin: 0 auto;
@@ -15,15 +14,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // background: greenyellow;
-}
-
-.join-game {
-  // background: aqua;
-}
-
-.create-game {
-  background: aquamarine;
 }
 
 .home-secion--separator {
@@ -33,7 +23,6 @@
   font-weight: bold;
 }
 
-.game-id-error {
-  font-size: 80%;
-  color: $color-red;
+.create-game-label {
+  margin-top: $unit2;
 }
