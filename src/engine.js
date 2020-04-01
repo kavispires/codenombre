@@ -17,6 +17,8 @@ class GameEngine {
   }
 
   init(gameID, mode = 'classic') {
+    this.reset();
+
     this.gameID = gameID;
     this.mode = mode;
     this.setup();
@@ -47,6 +49,10 @@ class GameEngine {
     this.keyCard = data.keyCard;
 
     return this.state();
+  }
+
+  reset() {
+    // TO-DO reset all properties
   }
 
   setup() {

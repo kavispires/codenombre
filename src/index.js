@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import './stylesheets/index.css';
+import App from './components/App';
+// import Home from './components/Home';
+// import Admin from './components/Admin';
+// import Game from './components/Game';
 import * as serviceWorker from './serviceWorker';
 
+// function Container() {
+//   return (
+//     <Router>
+//       <App>
+//         <Switch>
+//           <Route path="/create" component={Admin} />
+//           <Route path="/:gameid" component={Game} />
+//           <Route exact path="/" component={Home} />
+//         </Switch>
+//       </App>
+//     </Router>
+//   );
+// }
+
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <App />
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root')
 );
 
