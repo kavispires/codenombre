@@ -36,21 +36,11 @@ const HomeCreate = ({ setTempGameID }) => {
         },
       });
       setTempGameID(id);
-      setToast({
-        ...toast,
-        isVisible: true,
-        message: `Game created successfully. ID: ${id}`,
-        severity: 'success',
-      });
+      setToast(toastService.success(toast, `Game created successfully. ID: ${id}`));
       setIsLoading(false);
       setScreen('home');
     } catch {
-      setToast({
-        ...toast,
-        isVisible: true,
-        message: `Creating game has failed`,
-        severity: 'error',
-      });
+      setToast(toastService.error(toast, 'Creating game has failed'));
     } finally {
       setIsLoading(false);
     }
