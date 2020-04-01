@@ -13,6 +13,7 @@ import API from '../api';
 import GameEngine from '../engine';
 import useGlobalState from '../useGlobalState';
 import { generadeID } from '../utils';
+import toastService from '../toastService';
 
 const HomeCreate = ({ setTempGameID }) => {
   // Global States
@@ -35,11 +36,21 @@ const HomeCreate = ({ setTempGameID }) => {
         },
       });
       setTempGameID(id);
-      setToast({ ...toast, isVisible: true, message: `Game created successfully. ID: ${id}` });
+      setToast({
+        ...toast,
+        isVisible: true,
+        message: `Game created successfully. ID: ${id}`,
+        severity: 'success',
+      });
       setIsLoading(false);
       setScreen('home');
     } catch {
-      setToast({ ...toast, isVisible: true, message: `Creating game has failed` });
+      setToast({
+        ...toast,
+        isVisible: true,
+        message: `Creating game has failed`,
+        severity: 'error',
+      });
     } finally {
       setIsLoading(false);
     }
