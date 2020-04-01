@@ -21,6 +21,11 @@ body {
   margin-bottom: 16px !important;
 }
 
+.progress-bar-placeholder {
+  width: 100%;
+  height: 4px;
+}
+
 .header {
   background: #025002 !important;
   text-align: center;
@@ -63,6 +68,15 @@ body {
 
 .create-game-label {
   margin-top: 8px;
+}
+
+.game-waiting-room {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  min-height: 85vh;
+  align-items: center;
+  background: #fff;
 }
 
 .game-chat {

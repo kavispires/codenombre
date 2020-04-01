@@ -20,7 +20,7 @@ const HomeJoin = ({ tempGameID, setTempGameID }) => {
 
   useEffect(() => {
     // Check if game exists
-    if (tempGameID?.length === 4) {
+    if (gameID !== tempGameID && tempGameID?.length === 4) {
       setIsLoading(true);
 
       API.ref(`codenombre/${tempGameID.toUpperCase()}`).once('value', (snap) => {
@@ -34,9 +34,10 @@ const HomeJoin = ({ tempGameID, setTempGameID }) => {
         }
         setIsLoading(false);
       });
-    } else {
+    }
+
+    if (tempGameID?.length < 4) {
       setIsValidGameID(false);
-      setIsLoading(false);
     }
 
     // Check if nickname is valid
@@ -45,7 +46,11 @@ const HomeJoin = ({ tempGameID, setTempGameID }) => {
     } else {
       setIsValidNickname(false);
     }
-  }, [tempGameID, setGameID, setIsValidGameID, setIsLoading, nickname, setIsValidNickname]);
+  }, [gameID, tempGameID, setGameID, setIsValidGameID, setIsLoading, nickname, setIsValidNickname]);
+
+  const goToWaitingRoom = () => {
+    setScreen('game.waiting');
+  };
 
   const goToCreateGame = () => {
     setScreen('home.create');
@@ -80,7 +85,7 @@ const HomeJoin = ({ tempGameID, setTempGameID }) => {
         variant="contained"
         color="primary"
         disabled={!isValidNickname || !isValidGameID}
-        onClick={() => NOOP()}
+        onClick={() => goToWaitingRoom()}
         style={{ background: green[500] }}
       >
         Join {gameID}

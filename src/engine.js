@@ -5,10 +5,15 @@ const WORDS = require('./words');
 
 class GameEngine {
   constructor() {
+    this._dbRef = null;
+
     this.gameID = null;
-    this.codenames = [];
     this.mode = null;
     this.difficulty = null;
+    this.players = [];
+    this.me = null;
+
+    this.codenames = [];
     this.turn = 0;
     this.cluesA = [];
     this.cluesB = [];
@@ -28,8 +33,30 @@ class GameEngine {
     return this.state();
   }
 
+  save(dataObj) {
+    this._dbRef.update(dataObj);
+  }
+
+  setDbRef(dbRef) {
+    this._dbRef = dbRef;
+  }
+
   setGameID(gameID) {
     this.gameID = gameID;
+  }
+
+  isMyNicknameSet() {
+    return this.players.includes(this.me);
+  }
+
+  setPlayer(nickname) {
+    if (!this.players.includes(nickname)) {
+      this.players.push(nickname);
+      this.me = nickname;
+      this.save({ players: this.players });
+      console.log('players', this.players);
+      console.log('me', this.me);
+    }
   }
 
   state() {
@@ -37,6 +64,8 @@ class GameEngine {
       gameID: this.gameID,
       mode: this.mode,
       difficulty: this.difficulty,
+      players: this.players,
+
       codenames: this.codenames,
       keyCard: this.keyCard,
     };
@@ -47,11 +76,12 @@ class GameEngine {
     this.gameID = data.gameID;
     this.mode = data.mode;
     this.difficulty = data.difficulty;
+    this.players = data.players || [];
 
     this.codenames = data.codenames;
-    this.turn = data.turn;
-    this.cluesA = data.cluesA;
-    this.cluesB = data.cluesB;
+    // this.turn = data.turn;
+    // this.cluesA = data.cluesA;
+    // this.cluesB = data.cluesB;
     this.keyCard = data.keyCard;
 
     return this.state();
