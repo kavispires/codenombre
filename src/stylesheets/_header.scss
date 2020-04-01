@@ -1,0 +1,17 @@
+.header {
+  background: $color-green !important;
+  text-align: center;
+  padding: $unit2;
+
+  &__game-id {
+    font-size: 75%;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  &__military-translation {
+    font-size: 75%;
+  }
+}

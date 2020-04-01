@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #edf0f5;
+}
+
+.mui-block {
+  display: block !important;
+  margin-bottom: $unit3 !important;
+}
+
+.padding {
+  padding: $unit3;
+  margin-bottom: $unit3;
+}
+
+.mui-full-width {
+  width: 100% !important;
+  margin-bottom: $unit3 !important;
+}

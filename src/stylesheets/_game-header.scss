@@ -1,0 +1,17 @@
+.game-header {
+  background: #025002 !important;
+  text-align: center;
+  padding: 8px;
+
+  &__game-id {
+    font-size: 75%;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  &__military-translation {
+    font-size: 75%;
+  }
+}
