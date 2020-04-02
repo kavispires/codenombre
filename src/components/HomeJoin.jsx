@@ -5,8 +5,6 @@ import { green } from '@material-ui/core/colors';
 import API from '../api';
 import useGlobalState from '../useGlobalState';
 
-const NOOP = () => {};
-
 const HomeJoin = ({ tempGameID, setTempGameID }) => {
   // Global States
   const [gameID, setGameID] = useGlobalState('gameID');

@@ -72,7 +72,7 @@ const HomeCreate = ({ setTempGameID }) => {
         </RadioGroup>
       </FormControl>
       <Button
-        className="block"
+        className="mui-block"
         variant="contained"
         color="primary"
         style={{ background: green[500] }}
@@ -80,6 +80,13 @@ const HomeCreate = ({ setTempGameID }) => {
         disabled={isLoading}
       >
         Create {gameMode} game
+      </Button>
+      <Button
+        className="mui-block create-game-back-button"
+        color="default"
+        onClick={() => setScreen('home')}
+      >
+        Back
       </Button>
     </div>
   );

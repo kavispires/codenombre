@@ -6,6 +6,13 @@ body {
   background-color: #edf0f5;
 }
 
+.full-screen {
+  height: 95vh;
+  display: flex !important;
+  flex-direction: column;
+  background-color: palevioletred;
+}
+
 .mui-block {
   display: block !important;
   margin-bottom: 16px !important;
@@ -44,6 +51,7 @@ body {
 .home {
   background: white;
   padding-bottom: 32px;
+  flex: 1;
 }
 
 .home-content {
@@ -70,13 +78,37 @@ body {
   margin-top: 8px;
 }
 
+.create-game-back-button {
+  margin-top: 8px;
+}
+
 .game-waiting-room {
   text-align: center;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   min-height: 85vh;
   align-items: center;
   background: #fff;
+}
+.game-waiting-room__message {
+  margin-top: 8px;
+}
+
+.game {
+  flex: 1;
+}
+
+.game-content {
+  flex: 1;
+}
+
+.game-session {
+  display: flex;
+}
+
+.game-timeline__title {
+  color: #ffffff;
 }
 
 .game-chat {

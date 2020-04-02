@@ -1,6 +1,7 @@
 .home {
   background: white;
   padding-bottom: $unit4;
+  flex: 1;
 }
 
 .home-content {
@@ -24,5 +25,9 @@
 }
 
 .create-game-label {
+  margin-top: $unit2;
+}
+
+.create-game-back-button {
   margin-top: $unit2;
 }

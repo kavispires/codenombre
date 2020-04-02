@@ -14,7 +14,7 @@ const App = (props) => {
 
   return (
     <Fragment>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className="full-screen">
         {isLoading ? <LinearProgress /> : <div className="progress-bar-placeholder" />}
         {screen.startsWith('home') && <Home />}
         {screen.startsWith('game') && <Game />}

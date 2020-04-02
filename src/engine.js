@@ -16,16 +16,77 @@ class GameEngine {
     this.online = [false, false];
     this.timestamps = [0, 0];
     this.me = null;
-
-    this.codenames = [];
     this.turn = 0;
-    this.cluesA = [];
-    this.cluesB = [];
-    this.keyCardA = [];
-    this.keyCardB = [];
-    this.whoAmI = 'A';
+    this.turnOrder = [];
+    this.phase = 'setup';
+    this.messages = [];
+    this.codenames = [];
+
+    this._tempSaveObj = null;
+    this._interval = null;
   }
 
+  /**
+   * Determines the index of the player in the players array
+   * @type  {string}
+   */
+  get myDatabaseIndex() {
+    console.log('me', this.me, this.players);
+    return this.players.findIndex((p) => p === this.me);
+  }
+
+  /**
+   * Flag indicating if game has already two players set
+   * @type  {boolean}
+   */
+  get isGameFull() {
+    return !this.amISet && this.players.length === 2;
+  }
+
+  /**
+   * Flag indicating if me property is set and included in players
+   * @type  {boolean}
+   */
+  get amISet() {
+    return this.me && this.players.includes(this.me);
+  }
+
+  /**
+   * Flag indicating if all players are online
+   * @type  {boolean}
+   */
+  get areAllPlayersOnline() {
+    return this.online.every((s) => s);
+  }
+
+  /**
+   * State to be used by the game global state
+   * @type  {string}
+   */
+  get state() {
+    return {
+      gameID: this.gameID,
+      mode: this.mode,
+      difficulty: this.difficulty,
+      players: this.players,
+      timestamps: this.timestamps,
+      turn: this.turn,
+      phase: this.phase,
+      messages: this.messages,
+      turnOrder: this.turnOrder,
+      codenames: this.codenames,
+      keyCard: this.keyCard,
+      online: this.areAllPlayersOnline,
+    };
+  }
+
+  /**
+   * Sets basic info and calls setup function to prepare game
+   * @param  {string} gameID a 4-letter unique ID
+   * @param  {string} mode (classic, simple, pictures, dixit, deception)
+   * @param  {string} difficulty (easy, normal)
+   * @returns {object} the current state
+   */
   init(gameID, mode, difficulty) {
     this.reset();
 
@@ -34,23 +95,42 @@ class GameEngine {
     this.difficulty = difficulty;
 
     this.setup();
-    return this.state();
-  }
 
-  myDatabaseIndex() {
-    return this.players.findIndex((p) => p === this.me);
+    return this.state;
   }
 
   updateOnline() {
     const now = Date.now();
-    this.online = this.timestamps.map((entry) => now - entry < ONE_MINUTE * 2);
+    this.online = this.timestamps.map((entry) => now - entry < ONE_MINUTE * 10);
+    console.log('online', this.online);
     return this.online;
   }
 
-  save(dataObj) {
+  delaySave() {
+    this._interval = setInterval(() => {
+      console.log('trying');
+      if (this._dbRef) {
+        this.save({ ...this._tempSaveObj });
+        this._tempSaveObj = null;
+        clearInterval(this._interval);
+        console.log('done');
+      }
+    }, 1000);
+  }
+
+  save(dataObj = {}) {
+    if (!this._dbRef) {
+      this._tempSaveObj = dataObj;
+      this.delaySave();
+      console.log('NO REF');
+      return;
+    }
+
     console.log('SAVING...');
     // New timestamp
-    this.timestamps[this.myDatabaseIndex()] = Date.now();
+    this.timestamps[this.myDatabaseIndex] = Date.now();
+    // Update online check
+    this.updateOnline();
 
     this._dbRef.update({
       ...dataObj,
@@ -66,20 +146,11 @@ class GameEngine {
     this.gameID = gameID;
   }
 
-  isGameFull() {
-    console.log(this.players);
-    console.log(this.me);
-    return !this.amISet() && this.players.length === 2;
-  }
-
-  amISet() {
-    return this.me && this.players.includes(this.me);
-  }
-
   setPlayer(nickname) {
     this.me = nickname;
+    console.log(this.me, nickname);
 
-    if (this.isGameFull()) {
+    if (this.isGameFull) {
       throw Error('Game is full, try a different game ID');
     }
 
@@ -87,21 +158,15 @@ class GameEngine {
       this.players.push(nickname);
       this.save({ players: this.players });
     } else {
-      this.save({});
+      this.save();
     }
   }
 
-  state() {
-    return {
-      gameID: this.gameID,
-      mode: this.mode,
-      difficulty: this.difficulty,
-      players: this.players,
-      timestamps: this.timestamps,
+  setMe(nickname) {
+    console.log('setme', this.me, nickname);
+    if (!this.me) this.me = nickname;
 
-      codenames: this.codenames,
-      keyCard: this.keyCard,
-    };
+    this.save();
   }
 
   update(data) {
@@ -111,14 +176,14 @@ class GameEngine {
     this.difficulty = data.difficulty;
     this.players = data.players || [];
     this.timestamps = data.timestamps || [0, 0];
+    this.turn = data.turn;
+    this.phase = data.phase;
+    this.messages = data.messages;
 
     this.codenames = data.codenames;
-    // this.turn = data.turn;
-    // this.cluesA = data.cluesA;
-    // this.cluesB = data.cluesB;
     this.keyCard = data.keyCard;
 
-    return this.state();
+    return this.state;
   }
 
   reset() {
@@ -140,6 +205,17 @@ class GameEngine {
 
     // Set words
     this.codenames = getRandomItems(WORDS, gridLength);
+  }
+
+  setTurnOrder() {
+    const myIndex = this.myDatabaseIndex;
+    console.log({ myIndex });
+    const turnOrder = myIndex === 0 ? [...this.players] : [...this.players].reverse();
+    this.save({
+      turnOrder,
+      turn: this.turn + 1,
+      phase: 'clue-giving',
+    });
   }
 
   getMyKeys() {

@@ -16,7 +16,7 @@ const GameWaitingRoom = () => {
   // Set your nickname on mount
   useEffect(() => {
     try {
-      if (dbRef && !gameEngine.amISet()) {
+      if (dbRef && !gameEngine.amISet) {
         gameEngine.setPlayer(nickname);
       }
     } catch (err) {
@@ -28,19 +28,20 @@ const GameWaitingRoom = () => {
 
   // Whenever game has two players, go to pre-game
   useEffect(() => {
-    const isAllOnline = gameEngine.updateOnline().every((s) => s);
-    if (isAllOnline) {
-      setScreen('game.setup');
+    if (!gameEngine.me) {
+      gameEngine.setMe(nickname);
     }
-  }, [game, setScreen]);
+
+    if (gameEngine.areAllPlayersOnline) {
+      setScreen('game.stage.setup');
+    }
+  }, [game, setScreen, nickname]);
 
   return (
-    <div className="game-waiting-room">
-      <div>
-        <CircularProgress />
-        <div className="game-waiting-room__message">Hi, {nickname}</div>
-        <div className="game-waiting-room__message">Waiting for players to join...</div>
-      </div>
+    <div className="game-content game-waiting-room">
+      <CircularProgress />
+      <div className="game-waiting-room__message">Hi, {nickname}</div>
+      <div className="game-waiting-room__message">Waiting for another player to join...</div>
     </div>
   );
 };

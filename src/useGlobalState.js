@@ -6,7 +6,7 @@ const initialState = {
   gameID: null,
   nickname: null,
   isLoading: false,
-  game: GameEngine.state(),
+  game: GameEngine.state,
   dbRef: null,
   screen: 'home',
   toast: {

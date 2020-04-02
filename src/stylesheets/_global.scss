@@ -6,6 +6,13 @@ body {
   background-color: #edf0f5;
 }
 
+.full-screen {
+  height: 95vh;
+  display: flex !important;
+  flex-direction: column;
+  background-color: palevioletred;
+}
+
 .mui-block {
   display: block !important;
   margin-bottom: $unit3 !important;
