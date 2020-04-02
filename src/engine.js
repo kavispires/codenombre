@@ -3,6 +3,8 @@ import { getRandomItems, shuffle } from './utils';
 
 const WORDS = require('./words');
 
+const ONE_MINUTE = 60000;
+
 class GameEngine {
   constructor() {
     this._dbRef = null;
@@ -11,6 +13,8 @@ class GameEngine {
     this.mode = null;
     this.difficulty = null;
     this.players = [];
+    this.online = [false, false];
+    this.timestamps = [0, 0];
     this.me = null;
 
     this.codenames = [];
@@ -33,8 +37,25 @@ class GameEngine {
     return this.state();
   }
 
+  myDatabaseIndex() {
+    return this.players.findIndex((p) => p === this.me);
+  }
+
+  updateOnline() {
+    const now = Date.now();
+    this.online = this.timestamps.map((entry) => now - entry < ONE_MINUTE * 2);
+    return this.online;
+  }
+
   save(dataObj) {
-    this._dbRef.update(dataObj);
+    console.log('SAVING...');
+    // New timestamp
+    this.timestamps[this.myDatabaseIndex()] = Date.now();
+
+    this._dbRef.update({
+      ...dataObj,
+      timestamps: this.timestamps,
+    });
   }
 
   setDbRef(dbRef) {
@@ -45,17 +66,28 @@ class GameEngine {
     this.gameID = gameID;
   }
 
-  isMyNicknameSet() {
-    return this.players.includes(this.me);
+  isGameFull() {
+    console.log(this.players);
+    console.log(this.me);
+    return !this.amISet() && this.players.length === 2;
+  }
+
+  amISet() {
+    return this.me && this.players.includes(this.me);
   }
 
   setPlayer(nickname) {
+    this.me = nickname;
+
+    if (this.isGameFull()) {
+      throw Error('Game is full, try a different game ID');
+    }
+
     if (!this.players.includes(nickname)) {
       this.players.push(nickname);
-      this.me = nickname;
       this.save({ players: this.players });
-      console.log('players', this.players);
-      console.log('me', this.me);
+    } else {
+      this.save({});
     }
   }
 
@@ -65,6 +97,7 @@ class GameEngine {
       mode: this.mode,
       difficulty: this.difficulty,
       players: this.players,
+      timestamps: this.timestamps,
 
       codenames: this.codenames,
       keyCard: this.keyCard,
@@ -77,6 +110,7 @@ class GameEngine {
     this.mode = data.mode;
     this.difficulty = data.difficulty;
     this.players = data.players || [];
+    this.timestamps = data.timestamps || [0, 0];
 
     this.codenames = data.codenames;
     // this.turn = data.turn;
