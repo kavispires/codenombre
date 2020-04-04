@@ -1,7 +1,6 @@
 .game-chat {
-  width: 40%;
-  max-width: $sidePanelsWidthMax;
-  min-width: $sidePanelsWidthMin;
+  width: $sidePanelWidth;
+  background: $color-brown;
   background: #837065;
   display: flex;
   flex-direction: column;

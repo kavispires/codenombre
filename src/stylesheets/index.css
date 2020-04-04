@@ -74,20 +74,15 @@ body {
 .header__military-translation {
   font-size: 75%;
 }
-.header__left-area {
-  width: 20%;
+.header__left-area,
+.header__right-area {
+  width: 17%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 .header__game-center {
   flex: 1;
-}
-.header__right-area {
-  width: 20%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
 }
 
 .badge--online > .MuiBadge-badge {
@@ -178,9 +173,8 @@ body {
 }
 
 .game-chat {
-  width: 40%;
-  max-width: 200px;
-  min-width: 180px;
+  width: 17%;
+  background: #837065;
   background: #837065;
   display: flex;
   flex-direction: column;
@@ -264,6 +258,7 @@ body {
 }
 
 .codenames-grid {
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -277,10 +272,8 @@ body {
 }
 
 .game-timeline {
-  width: 40%;
+  width: 17%;
   background: #837065;
-  max-width: 200px;
-  min-width: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
