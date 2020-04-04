@@ -11,9 +11,10 @@ const GameWaitingRoom = () => {
   const [game] = useGlobalState('game');
   const [, setGameID] = useGlobalState('gameID');
   const [nickname] = useGlobalState('nickname');
+  const [online] = useGlobalState('online');
   const [, setScreen] = useGlobalState('screen');
   const [toast, setToast] = useGlobalState('toast');
-  const [online] = useGlobalState('online');
+  const [, setDialog] = useGlobalState('dialog');
 
   // Set your nickname on mount
   useEffect(() => {
@@ -35,9 +36,11 @@ const GameWaitingRoom = () => {
     }
 
     if (isEveryoneOnline(online)) {
+      console.log('HERE');
       setScreen('game.stage.setup');
+      setDialog({ isVisible: true, duration: 'long', message: gameEngine.dialog });
     }
-  }, [game, setScreen, nickname, online]);
+  }, [game, setScreen, nickname, online, setDialog]);
 
   return (
     <div className="game-content game-waiting-room">

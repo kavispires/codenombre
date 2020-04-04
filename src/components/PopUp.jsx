@@ -1,7 +1,9 @@
 import React, { forwardRef, useEffect } from 'react';
 
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import Zoom from '@material-ui/core/Zoom';
+import { green } from '@material-ui/core/colors';
 
 import useGlobalState from '../useGlobalState';
 
@@ -17,22 +19,24 @@ const PopUp = () => {
 
   const handleClose = () => {
     setDialog({
-      ...dialog,
       isVisible: false,
     });
     clearTimeout(closePopUpTimer);
   };
 
   useEffect(() => {
-    if (dialog.isVisible) {
+    if (dialog.isVisible && (!dialog.duration || dialog.duration !== 'fixed')) {
+      const timer = dialog.duration === 'long' ? 12000 : 5000;
+
       closePopUpTimer = setTimeout(() => {
         setDialog({
-          ...dialog,
           isVisible: false,
         });
-      }, 5000);
+      }, timer);
     }
   }, [dialog, setDialog]);
+
+  const texts = dialog?.message?.split('<br>') || [];
 
   return (
     <Dialog
@@ -43,10 +47,31 @@ const PopUp = () => {
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
-      <div className="popup-container">Waiting for player X to do Y.</div>
-      <div className="popup-timeleft">
-        <span className="popup-timeleft__bar"></span>
+      <div className="popup-container">
+        {texts.map((text) => (
+          <p key={text}>{text}</p>
+        ))}
+
+        {(dialog.duration === 'long' || dialog.duration === 'fixed') && (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ background: green[300] }}
+            onClick={() => handleClose()}
+          >
+            OK
+          </Button>
+        )}
       </div>
+      {dialog.duration !== 'fixed' && (
+        <div className="popup-timeleft">
+          <span
+            className={`popup-timeleft__bar popup-timeleft__bar--${
+              dialog.duration === 'long' ? 'long' : 'short'
+            }`}
+          ></span>
+        </div>
+      )}
     </Dialog>
   );
 };

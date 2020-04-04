@@ -17,6 +17,14 @@ const HomeJoin = ({ tempGameID, setTempGameID, tempNickname }) => {
   const [isValidNickname, setIsValidNickname] = useState(false);
   const [errorGameID, setErrorGameID] = useState('');
 
+  // On Mount
+  useEffect(() => {
+    if (tempNickname) {
+      setNickname(tempNickname);
+    }
+  });
+
+  // On Update
   useEffect(() => {
     // Check if game exists
     if (gameID !== tempGameID && tempGameID?.length === 4) {

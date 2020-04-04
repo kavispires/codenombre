@@ -18,7 +18,7 @@ const Game = () => {
   const [, setIsLoading] = useGlobalState('isLoading');
   const [screen, setScreen] = useGlobalState('screen');
   const [toast, setToast] = useGlobalState('toast');
-  const [online, setOnline] = useGlobalState('online');
+  const [, setOnline] = useGlobalState('online');
 
   // Create database reference
   useEffect(() => {

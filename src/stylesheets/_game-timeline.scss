@@ -5,4 +5,23 @@
     border-radius: 4px;
     color: black;
   }
+
+  &__round {
+    display: flex;
+    align-items: center;
+  }
+
+  &__round-number {
+    min-width: 20px;
+    color: $color-white;
+    text-align: right;
+  }
+}
+
+.dialog-box {
+  margin: $unit2 $unit2 $unit2 $unit3;
+  background: $color-white;
+  font-size: 80%;
+  padding: $unit2;
+  text-align: center;
 }

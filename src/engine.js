@@ -5,6 +5,11 @@ const WORDS = require('./words');
 
 const ONE_MINUTE = 60000;
 
+const dialogs = {
+  setup:
+    'Analyse the cards.<br>When you think you have a good clue in mind, press "I want to start"!',
+};
+
 class GameEngine {
   constructor() {
     this._dbRef = null;
@@ -78,6 +83,14 @@ class GameEngine {
     };
   }
 
+  get dialog() {
+    if (this.phase === 'setup') {
+      return dialogs.setup;
+    }
+
+    return '';
+  }
+
   /**
    * Sets basic info and calls setup function to prepare game
    * @param  {string} gameID a 4-letter unique ID
@@ -98,9 +111,7 @@ class GameEngine {
   }
 
   updateOnline() {
-    const now = Date.now();
-    this.online = this.timestamps.map((entry) => now - entry < ONE_MINUTE * 10);
-    console.log('online', this.online);
+    this.online = this.timestamps.map((entry) => Date.now() - entry < ONE_MINUTE * 10);
     return this.online;
   }
 
@@ -117,11 +128,10 @@ class GameEngine {
   save(dataObj = {}) {
     if (!this._dbRef) {
       this._tempSaveObj = dataObj;
-      this.delaySave();
-      return;
+      return this.delaySave();
     }
 
-    console.log('SAVING...');
+    console.log('%cSaving...', 'background:LightSalmon');
     // New timestamp
     this.timestamps[this.myDatabaseIndex] = Date.now();
     // // Update online check
@@ -162,14 +172,13 @@ class GameEngine {
   }
 
   setMe(nickname) {
-    console.log('setme', this.me, nickname);
     if (!this.me) this.me = nickname;
 
     this.save();
   }
 
   update(data) {
-    console.log('%cUpdating game...', 'background:LemonChiffon', data);
+    console.log('%cUpdating game...', 'background:GreenYellow', data);
     this.gameID = data.gameID;
     this.mode = data.mode;
     this.difficulty = data.difficulty;
@@ -207,9 +216,7 @@ class GameEngine {
   }
 
   setTurnOrder() {
-    const myIndex = this.myDatabaseIndex;
-    console.log({ myIndex });
-    const turnOrder = myIndex === 0 ? [...this.players] : [...this.players].reverse();
+    const turnOrder = this.myDatabaseIndex === 0 ? [...this.players] : [...this.players].reverse();
     this.save({
       turnOrder,
       turn: this.turn + 1,

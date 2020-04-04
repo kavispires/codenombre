@@ -116,9 +116,8 @@ body {
 }
 
 .popup-container {
-  max-width: 70vw;
-  min-width: 30vw;
   padding: 32px;
+  text-align: center;
 }
 
 .popup-timeleft {
@@ -132,7 +131,10 @@ body {
   height: 8px;
   position: absolute;
   background: #025002;
-  animation: retractToZero 5s ease-in-out infinite;
+  animation: retractToZero 6s linear;
+}
+.popup-timeleft__bar--long {
+  animation: retractToZero 12s linear;
 }
 
 .home {
@@ -199,6 +201,25 @@ body {
   padding: 4px;
   border-radius: 4px;
   color: black;
+}
+
+.game-timeline__round {
+  display: flex;
+  align-items: center;
+}
+
+.game-timeline__round-number {
+  min-width: 20px;
+  color: #ffffff;
+  text-align: right;
+}
+
+.dialog-box {
+  margin: 8px 8px 8px 16px;
+  background: #ffffff;
+  font-size: 80%;
+  padding: 8px;
+  text-align: center;
 }
 
 .game-chat {
