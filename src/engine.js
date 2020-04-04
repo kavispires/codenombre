@@ -1,5 +1,6 @@
 import { GAME_LENGHTS, KEY_MAPPING } from './constants';
 import { getRandomItems, shuffle } from './utils';
+import mockTurns from './api/mock-turns';
 
 const WORDS = require('./words');
 
@@ -131,15 +132,14 @@ class GameEngine {
       return this.delaySave();
     }
 
-    console.log('%cSaving...', 'background:LightSalmon');
+    console.log('%cSaving...', 'background:LightSalmon', dataObj);
+
     // New timestamp
     this.timestamps[this.myDatabaseIndex] = Date.now();
-    // // Update online check
-    // this.updateOnline();
 
     this._dbRef.update({
       ...dataObj,
-      timestamps: this.timestamps,
+      timestamps: dataObj.mock ? dataObj.timestamps : this.timestamps,
     });
   }
 
@@ -157,7 +157,6 @@ class GameEngine {
 
   setPlayer(nickname) {
     this.me = nickname;
-    console.log(this.me, nickname);
 
     if (this.isGameFull) {
       throw Error('Game is full, try a different game ID');
@@ -222,6 +221,10 @@ class GameEngine {
       turn: this.turn + 1,
       phase: 'clue-giving',
     });
+  }
+
+  mock(turnNumber) {
+    this.save(mockTurns(turnNumber));
   }
 }
 

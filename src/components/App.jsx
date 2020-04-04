@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Container, LinearProgress } from '@material-ui/core';
 
+import gameEngine from '../engine';
 import useGlobalState from '../useGlobalState';
 
 import Game from './Game';
@@ -22,6 +23,13 @@ const App = (props) => {
       </Container>
       <Toast />
       <PopUp />
+      {process.env.NODE_ENV === 'development' && (
+        <div className="mock-buttons">
+          <button onClick={() => gameEngine.mock(0)}>Mock Setup</button>
+          <button onClick={() => gameEngine.mock(1)}>Mock Round 1</button>
+          <button onClick={() => gameEngine.mock(2)}>Mock Round 2</button>
+        </div>
+      )}
     </Fragment>
   );
 };

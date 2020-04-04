@@ -4,7 +4,6 @@ import API from '../api';
 import gameEngine from '../engine';
 import toastService from '../toastService';
 import useGlobalState from '../useGlobalState';
-import { isEveryoneOnline } from '../utils';
 
 import GameHeader from './GameHeader';
 import GameSession from './GameSession';

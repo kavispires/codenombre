@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextField, Button } from '@material-ui/core';
-import { green, yellow } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 
 import gameEngine from '../engine';
 import useGlobalState from '../useGlobalState';
