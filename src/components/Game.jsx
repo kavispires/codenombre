@@ -27,7 +27,6 @@ const Game = () => {
 
       API.ref(`codenombre/${gameID}`).once('value', (snap) => {
         if (snap.val()) {
-          console.log('SETTING REF');
           const firebaseReference = API.ref().child('codenombre').child(gameID);
           gameEngine.setGameID(gameID);
           gameEngine.setDbRef(firebaseReference);
@@ -74,7 +73,7 @@ const Game = () => {
   return (
     <div className="game">
       <GameHeader gameID={gameID} />
-      {(screen === 'game.waiting' || !isEveryoneOnline(online)) && <GameWaitingRoom />}
+      {screen === 'game.waiting' && <GameWaitingRoom />}
       {screen.startsWith('game.stage') && <GameSession />}
     </div>
   );

@@ -4,8 +4,9 @@ import { green } from '@material-ui/core/colors';
 
 import API from '../api';
 import useGlobalState from '../useGlobalState';
+import localStorageService from '../localStorage';
 
-const HomeJoin = ({ tempGameID, setTempGameID }) => {
+const HomeJoin = ({ tempGameID, setTempGameID, tempNickname }) => {
   // Global States
   const [gameID, setGameID] = useGlobalState('gameID');
   const [isLoading, setIsLoading] = useGlobalState('isLoading');
@@ -39,14 +40,24 @@ const HomeJoin = ({ tempGameID, setTempGameID }) => {
     }
 
     // Check if nickname is valid
-    if (nickname?.length >= 3) {
+    if (nickname?.length >= 3 || tempNickname?.length >= 3) {
       setIsValidNickname(true);
     } else {
       setIsValidNickname(false);
     }
-  }, [gameID, tempGameID, setGameID, setIsValidGameID, setIsLoading, nickname, setIsValidNickname]);
+  }, [
+    gameID,
+    tempGameID,
+    setGameID,
+    setIsValidGameID,
+    setIsLoading,
+    nickname,
+    setIsValidNickname,
+    tempNickname,
+  ]);
 
   const goToWaitingRoom = () => {
+    localStorageService.setDefaults(gameID, nickname);
     setScreen('game.waiting');
   };
 
@@ -59,21 +70,22 @@ const HomeJoin = ({ tempGameID, setTempGameID }) => {
       <TextField
         className="mui-full-width"
         required
-        id="nickname"
-        label="Nickname"
-        onChange={(e) => setNickname(e.target.value)}
-        helperText={
-          nickname && !isValidNickname ? 'Nickname must be at least 3 characters long.' : ''
-        }
+        id="game-id"
+        label="Game ID"
+        defaultValue={tempGameID}
+        onChange={(e) => setTempGameID(e.target.value)}
+        helperText={errorGameID}
       />
       <TextField
         className="mui-full-width"
         required
-        id="game-id"
-        label="Game ID"
-        onChange={(e) => setTempGameID(e.target.value)}
-        defaultValue={tempGameID}
-        helperText={errorGameID}
+        id="nickname"
+        label="Nickname"
+        defaultValue={tempNickname}
+        onChange={(e) => setNickname(e.target.value)}
+        helperText={
+          nickname && !isValidNickname ? 'Nickname must be at least 3 characters long.' : ''
+        }
       />
 
       <div>{isLoading && <LinearProgress />}</div>
