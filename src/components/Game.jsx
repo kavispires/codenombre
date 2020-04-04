@@ -4,6 +4,7 @@ import API from '../api';
 import gameEngine from '../engine';
 import toastService from '../toastService';
 import useGlobalState from '../useGlobalState';
+import { isEveryoneOnline } from '../utils';
 
 import GameHeader from './GameHeader';
 import GameSession from './GameSession';
@@ -17,6 +18,7 @@ const Game = () => {
   const [, setIsLoading] = useGlobalState('isLoading');
   const [screen, setScreen] = useGlobalState('screen');
   const [toast, setToast] = useGlobalState('toast');
+  const [online, setOnline] = useGlobalState('online');
 
   // Create database reference
   useEffect(() => {
@@ -50,9 +52,11 @@ const Game = () => {
         setIsLoading(true);
         if (snap.val()) {
           setGame(gameEngine.update(snap.val()));
+          setOnline(gameEngine.updateOnline());
         }
         setIsLoading(false);
       };
+
       dbRef.on('value', handleGameState);
 
       const handleGameDisconnect = (snap) => {
@@ -65,12 +69,12 @@ const Game = () => {
         dbRef.off('value', handleGameDisconnect);
       };
     }
-  }, [dbRef, setGame, setIsLoading, setScreen, setToast, toast]);
+  }, [dbRef, setGame, setIsLoading, setScreen, setToast, toast, setOnline]);
 
   return (
     <div className="game">
       <GameHeader gameID={gameID} />
-      {screen === 'game.waiting' && <GameWaitingRoom />}
+      {(screen === 'game.waiting' || !isEveryoneOnline(online)) && <GameWaitingRoom />}
       {screen.startsWith('game.stage') && <GameSession />}
     </div>
   );

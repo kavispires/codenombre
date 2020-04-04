@@ -4,6 +4,7 @@ import { CircularProgress } from '@material-ui/core';
 import gameEngine from '../engine';
 import toastService from '../toastService';
 import useGlobalState from '../useGlobalState';
+import { isEveryoneOnline } from '../utils';
 
 const GameWaitingRoom = () => {
   const [dbRef] = useGlobalState('dbRef');
@@ -12,6 +13,7 @@ const GameWaitingRoom = () => {
   const [nickname] = useGlobalState('nickname');
   const [, setScreen] = useGlobalState('screen');
   const [toast, setToast] = useGlobalState('toast');
+  const [online] = useGlobalState('online');
 
   // Set your nickname on mount
   useEffect(() => {
@@ -32,10 +34,10 @@ const GameWaitingRoom = () => {
       gameEngine.setMe(nickname);
     }
 
-    if (gameEngine.areAllPlayersOnline) {
+    if (isEveryoneOnline(online)) {
       setScreen('game.stage.setup');
     }
-  }, [game, setScreen, nickname]);
+  }, [game, setScreen, nickname, online]);
 
   return (
     <div className="game-content game-waiting-room">

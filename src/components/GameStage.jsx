@@ -14,7 +14,7 @@ const GameSession = () => {
   return (
     <div className="codenames-grid">
       {game.codenames.map((codename, index) => {
-        const keyClass = getKeyClass(index, gameEngine.whoAmI, gameEngine.getMyKeys());
+        const keyClass = getKeyClass(index, gameEngine.myDatabaseIndex, game.keyCard);
         return <Card codename={codename} type="word" size={5} keyClass={keyClass} />;
       })}
     </div>

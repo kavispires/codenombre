@@ -13,6 +13,7 @@ const initialState = {
     isVisible: false,
     message: '',
   },
+  online: [false, false],
 };
 
 const { useGlobalState } = createGlobalState(initialState);

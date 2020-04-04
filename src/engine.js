@@ -31,8 +31,15 @@ class GameEngine {
    * @type  {string}
    */
   get myDatabaseIndex() {
-    console.log('me', this.me, this.players);
     return this.players.findIndex((p) => p === this.me);
+  }
+
+  /**
+   * Determines the index of the oppoent in the players array
+   * @type  {string}
+   */
+  get opponentIndex() {
+    return this.players.findIndex((p) => p !== this.me);
   }
 
   /**
@@ -52,14 +59,6 @@ class GameEngine {
   }
 
   /**
-   * Flag indicating if all players are online
-   * @type  {boolean}
-   */
-  get areAllPlayersOnline() {
-    return this.online.every((s) => s);
-  }
-
-  /**
    * State to be used by the game global state
    * @type  {string}
    */
@@ -76,7 +75,6 @@ class GameEngine {
       turnOrder: this.turnOrder,
       codenames: this.codenames,
       keyCard: this.keyCard,
-      online: this.areAllPlayersOnline,
     };
   }
 
@@ -108,12 +106,10 @@ class GameEngine {
 
   delaySave() {
     this._interval = setInterval(() => {
-      console.log('trying');
       if (this._dbRef) {
         this.save({ ...this._tempSaveObj });
         this._tempSaveObj = null;
         clearInterval(this._interval);
-        console.log('done');
       }
     }, 1000);
   }
@@ -122,15 +118,14 @@ class GameEngine {
     if (!this._dbRef) {
       this._tempSaveObj = dataObj;
       this.delaySave();
-      console.log('NO REF');
       return;
     }
 
     console.log('SAVING...');
     // New timestamp
     this.timestamps[this.myDatabaseIndex] = Date.now();
-    // Update online check
-    this.updateOnline();
+    // // Update online check
+    // this.updateOnline();
 
     this._dbRef.update({
       ...dataObj,
@@ -138,8 +133,12 @@ class GameEngine {
     });
   }
 
+  num = 1;
+
   setDbRef(dbRef) {
-    this._dbRef = dbRef;
+    if (!this._dbRef) {
+      this._dbRef = dbRef;
+    }
   }
 
   setGameID(gameID) {
@@ -217,12 +216,6 @@ class GameEngine {
       phase: 'clue-giving',
     });
   }
-
-  getMyKeys() {
-    return this.whoAmI === 'A' ? this.keyCard : this.keyCard.reverse();
-  }
-
-  //
 }
 
 export default new GameEngine();

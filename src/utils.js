@@ -48,8 +48,7 @@ export const getMilitaryTranslation = (gameID = '') => {
 };
 
 export const getKeyClass = (index, side, keys) => {
-  const sideIndex = side === 'A' ? 0 : 1;
-  const key = keys[index][sideIndex];
+  const key = keys[index][side];
   switch (key) {
     case 'A':
       return 'assassin';
@@ -58,4 +57,8 @@ export const getKeyClass = (index, side, keys) => {
     default:
       return 'bystander';
   }
+};
+
+export const isEveryoneOnline = (online) => {
+  return online.every((s) => s);
 };
