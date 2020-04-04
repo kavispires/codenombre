@@ -196,30 +196,55 @@ body {
   display: flex;
 }
 
+.game-timeline {
+  width: 17%;
+  background: #837065;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  min-height: 75vh;
+  justify-content: space-between;
+}
 .game-timeline__title {
   background: #ffffff;
   padding: 4px;
   border-radius: 4px;
-  color: black;
+  color: #111;
 }
-
 .game-timeline__round {
   display: flex;
   align-items: center;
 }
-
 .game-timeline__round-number {
   min-width: 20px;
   color: #ffffff;
   text-align: right;
 }
 
-.dialog-box {
+.dialog-container {
   margin: 8px 8px 8px 16px;
+}
+.dialog-container h3 {
+  color: #ffffff;
+  font-style: italic;
+  margin: 0;
+  border: #837065 1px solid;
+  text-align: center;
+}
+
+.dialog-box {
   background: #ffffff;
   font-size: 80%;
   padding: 8px;
   text-align: center;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dialog-box p {
+  margin-top: 0;
 }
 
 .game-chat {
@@ -319,13 +344,4 @@ body {
   display: flex;
   width: 100%;
   background: orange;
-}
-
-.game-timeline {
-  width: 17%;
-  background: #837065;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
 }

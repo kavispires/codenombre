@@ -15,21 +15,25 @@ const GameTimeTrack = () => {
 
   return (
     <div className="game-timeline">
-      <div className="game-timeline__title">Round Tracker</div>
-      {rounds.map((round, index) => (
-        <div key={`counter-${round}-${index}`} className="game-timeline__round">
-          <span className="game-timeline__round-number">{round}</span>
-          <FolderSpecial
-            className="round-marker"
-            style={game.turn - 1 === index ? { color: yellow[50] } : { color: green[500] }}
-            fontSize="large"
-          />
-        </div>
-      ))}
-      <div className="dialog-box">
-        {texts.map((text) => (
-          <p key={text}>{text}</p>
+      <div className="track-counters">
+        {rounds.map((round, index) => (
+          <div key={`counter-${round}-${index}`} className="game-timeline__round">
+            <span className="game-timeline__round-number">{round}</span>
+            <FolderSpecial
+              className="round-marker"
+              style={game.turn - 1 === index ? { color: yellow[50] } : { color: green[500] }}
+              fontSize="large"
+            />
+          </div>
         ))}
+      </div>
+      <div className="dialog-container">
+        <h3>Instructions</h3>
+        <div className="dialog-box">
+          {texts.map((text) => (
+            <p key={text}>{text}</p>
+          ))}
+        </div>
       </div>
     </div>
   );

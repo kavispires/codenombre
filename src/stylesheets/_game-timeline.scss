@@ -1,9 +1,19 @@
 .game-timeline {
+  width: $sidePanelWidth;
+  background: $color-brown;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  padding-top: 20px;
+  min-height: 75vh;
+  justify-content: space-between;
+
   &__title {
     background: $color-white;
     padding: 4px;
     border-radius: 4px;
-    color: black;
+    color: $color-black;
   }
 
   &__round {
@@ -18,10 +28,28 @@
   }
 }
 
-.dialog-box {
+.dialog-container {
   margin: $unit2 $unit2 $unit2 $unit3;
+
+  h3 {
+    color: $color-white;
+    font-style: italic;
+    margin: 0;
+    border: $color-brown 1px solid;
+    text-align: center;
+  }
+}
+
+.dialog-box {
   background: $color-white;
   font-size: 80%;
   padding: $unit2;
   text-align: center;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  p {
+    margin-top: 0;
+  }
 }
