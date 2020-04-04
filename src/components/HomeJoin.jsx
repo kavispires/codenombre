@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { TextField, Button, LinearProgress } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import TextField from '@material-ui/core/TextField';
 import { green } from '@material-ui/core/colors';
 
 import API from '../api';

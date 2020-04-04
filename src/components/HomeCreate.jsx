@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Radio,
-  FormControl,
-  RadioGroup,
-  FormControlLabel,
-  FormLabel,
-} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import { green } from '@material-ui/core/colors';
 
 import API from '../api';

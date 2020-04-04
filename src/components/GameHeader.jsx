@@ -1,5 +1,8 @@
 import React from 'react';
-import { AppBar, Avatar, Badge, IconButton } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
 import Cached from '@material-ui/icons/Cached';
 
 import gameEngine from '../engine';

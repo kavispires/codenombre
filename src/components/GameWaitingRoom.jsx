@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CircularProgress } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import gameEngine from '../engine';
 import toastService from '../toastService';

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { Container, LinearProgress } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import gameEngine from '../engine';
 import useGlobalState from '../useGlobalState';
@@ -9,7 +10,7 @@ import Home from './Home';
 import PopUp from './PopUp';
 import Toast from './Toast';
 
-const App = (props) => {
+const App = () => {
   // Global States
   const [isLoading] = useGlobalState('isLoading');
   const [screen] = useGlobalState('screen');
