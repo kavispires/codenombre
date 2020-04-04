@@ -49,6 +49,14 @@ class GameEngine {
   }
 
   /**
+   * Returns the name of the other player or OP
+   * @type  {string}
+   */
+  get opponentsName() {
+    return this.players[this.opponentIndex] || 'OP';
+  }
+
+  /**
    * Flag indicating if game has already two players set
    * @type  {boolean}
    */
