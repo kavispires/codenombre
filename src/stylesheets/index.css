@@ -20,6 +20,15 @@
   }
 }
 
+@keyframes retractToZero {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -104,6 +113,26 @@ body {
 
 .badge--offline > .MuiBadge-badge {
   background-color: grey;
+}
+
+.popup-container {
+  max-width: 70vw;
+  min-width: 30vw;
+  padding: 32px;
+}
+
+.popup-timeleft {
+  width: 100%;
+  height: 8px;
+  background: oldlace;
+  position: relative;
+}
+.popup-timeleft__bar {
+  width: 100%;
+  height: 8px;
+  position: absolute;
+  background: #025002;
+  animation: retractToZero 5s ease-in-out infinite;
 }
 
 .home {

@@ -1,0 +1,19 @@
+.popup-container {
+  max-width: 70vw;
+  min-width: 30vw;
+  padding: $unit4;
+}
+
+.popup-timeleft {
+  width: 100%;
+  height: $unit2;
+  background: oldlace;
+  position: relative;
+  &__bar {
+    width: 100%;
+    height: $unit2;
+    position: absolute;
+    background: $color-green;
+    animation: retractToZero 5s ease-in-out infinite;
+  }
+}

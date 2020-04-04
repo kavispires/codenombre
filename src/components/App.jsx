@@ -5,6 +5,7 @@ import useGlobalState from '../useGlobalState';
 
 import Game from './Game';
 import Home from './Home';
+import PopUp from './PopUp';
 import Toast from './Toast';
 
 const App = (props) => {
@@ -20,6 +21,7 @@ const App = (props) => {
         {screen.startsWith('game') && <Game />}
       </Container>
       <Toast />
+      <PopUp />
     </Fragment>
   );
 };

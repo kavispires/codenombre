@@ -13,6 +13,10 @@ const initialState = {
     isVisible: false,
     message: '',
   },
+  dialog: {
+    isVisible: false,
+    message: '',
+  },
   online: [false, false],
 };
 
