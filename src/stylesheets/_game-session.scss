@@ -7,5 +7,34 @@
 }
 
 .game-session {
-  display: flex;
+  background: $color-brown;
+
+  display: grid;
+  grid-template-columns: [left-col] 17% [center-col] auto [right-col] 17%;
+  grid-template-rows: [top-row] auto [bottom-row] 17fr [end-row];
+}
+
+.grid-timeline {
+  grid-column: 1;
+  grid-row: top-row / bottow-row;
+}
+
+.grid-instructions {
+  grid-column: left-col / center-col;
+  grid-row: bottow-row;
+}
+
+.grid-gameboard {
+  grid-column: center-col;
+  grid-row: 1 / 5;
+}
+
+.grid-chat {
+  grid-column: right-col;
+  grid-row: top-row;
+}
+
+.grid-actions {
+  grid-column: right-col;
+  grid-row: bottow-row;
 }

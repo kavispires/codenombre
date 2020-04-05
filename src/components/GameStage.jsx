@@ -12,7 +12,7 @@ const GameSession = () => {
   const [game] = useGlobalState('game');
 
   return (
-    <div className="codenames-grid">
+    <div className="grid-gameboard codenames-grid">
       {game.codenames.map((codename, index) => {
         const keyClass = getKeyClass(index, gameEngine.myDatabaseIndex, game.keyCard);
         return <Card codename={codename} type="word" size={5} keyClass={keyClass} />;

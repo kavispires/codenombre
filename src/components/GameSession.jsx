@@ -3,9 +3,11 @@ import React, { useEffect } from 'react';
 import gameEngine from '../engine';
 import useGlobalState from '../useGlobalState';
 
-import GameTimeTrack from './GameTimetrack';
+import GameTimeline from './GameTimeline';
+import GameInstructions from './GameInstructions';
 import GameChat from './GameChat';
 import GameStage from './GameStage';
+import GameActions from './GameActions';
 
 const GameSession = () => {
   // Global states
@@ -19,9 +21,11 @@ const GameSession = () => {
 
   return (
     <div className="game-content game-session">
-      <GameTimeTrack />
+      <GameTimeline />
+      <GameInstructions />
       <GameStage />
       <GameChat />
+      <GameActions />
     </div>
   );
 };

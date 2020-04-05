@@ -1,13 +1,9 @@
 .game-timeline {
-  width: $sidePanelWidth;
-  min-height: $sidePanelMinHeight;
-  background: $color-brown;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 20px;
+  padding: $unit2;
 
   &__title {
     background: $color-white;
@@ -25,31 +21,5 @@
     min-width: 20px;
     color: $color-white;
     text-align: right;
-  }
-}
-
-.dialog-container {
-  margin: $unit2 $unit2 $unit2 $unit3;
-
-  h3 {
-    color: $color-white;
-    font-style: italic;
-    margin: 0;
-    border: $color-brown 1px solid;
-    text-align: center;
-  }
-}
-
-.dialog-box {
-  background: $color-white;
-  font-size: 80%;
-  padding: $unit2;
-  text-align: center;
-  min-height: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  p {
-    margin-top: 0;
   }
 }

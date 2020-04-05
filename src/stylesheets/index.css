@@ -184,46 +184,81 @@ body {
   margin-top: 8px;
 }
 
-.game {
-  flex: 1;
+.game-actions {
+  box-sizing: border-box;
 }
-
-.game-content {
-  flex: 1;
-}
-
-.game-session {
+.game-actions__actions {
   display: flex;
+  justify-content: center;
+  padding: 8px;
+  height: 100%;
+}
+.game-actions__actions--clue-giving {
+  flex-direction: column;
+}
+.game-actions__actions--clue-giving > div {
+  margin-top: 4px;
+}
+.game-actions__actions--clue-giving > button {
+  margin-top: 8px;
+}
+.game-actions__actions--guessing {
+  align-items: center;
+}
+.game-actions__actions--setup {
+  align-items: center;
+}
+.game-actions__actions--waiting {
+  align-items: center;
 }
 
-.game-timeline {
-  width: 17%;
-  min-height: 75vh;
-  background: #837065;
+.game-chat {
+  box-sizing: border-box;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 20px;
+  padding: 0;
 }
-.game-timeline__title {
-  background: #ffffff;
-  padding: 4px;
-  border-radius: 4px;
-  color: #111;
-}
-.game-timeline__round {
+
+.message-board {
+  flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-top: 16px;
 }
-.game-timeline__round-number {
-  min-width: 20px;
-  color: #ffffff;
+
+.message {
+  font-size: 85%;
+  margin-bottom: 8px;
+  animation: moveUpIn 2s ease-out;
+}
+
+.message-text {
+  padding: 2px 6px;
+}
+
+.message-mine {
   text-align: right;
+  margin-right: 8px;
+}
+.message-mine .message-text {
+  background: #ffffff;
+  border-radius: 16px 16px 1px 16px;
+}
+
+.message-their {
+  text-align: left;
+}
+.message-their .message-text {
+  background: #ffffff;
+  border-radius: 1px 16px 16px 16px;
 }
 
 .dialog-container {
-  margin: 8px 8px 8px 16px;
+  box-sizing: border-box;
+  padding: 8px 8px 8px 16px;
 }
 .dialog-container h3 {
   color: #ffffff;
@@ -247,56 +282,67 @@ body {
   margin-top: 0;
 }
 
-.game-actions__actions {
+.game {
+  flex: 1;
+}
+
+.game-content {
+  flex: 1;
+}
+
+.game-session {
+  background: #837065;
+  display: grid;
+  grid-template-columns: [left-col] 17% [center-col] auto [right-col] 17%;
+  grid-template-rows: [top-row] auto [bottom-row] 17fr [end-row];
+}
+
+.grid-timeline {
+  grid-column: 1;
+  grid-row: top-row / bottow-row;
+}
+
+.grid-instructions {
+  grid-column: left-col / center-col;
+  grid-row: bottow-row;
+}
+
+.grid-gameboard {
+  grid-column: center-col;
+  grid-row: 1 / 5;
+}
+
+.grid-chat {
+  grid-column: right-col;
+  grid-row: top-row;
+}
+
+.grid-actions {
+  grid-column: right-col;
+  grid-row: bottow-row;
+}
+
+.game-timeline {
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   padding: 8px;
 }
-
-.game-chat {
-  width: 17%;
-  min-height: 75vh;
-  background: #837065;
+.game-timeline__title {
+  background: #ffffff;
+  padding: 4px;
+  border-radius: 4px;
+  color: #111;
+}
+.game-timeline__round {
   display: flex;
-  flex-direction: column;
-  padding: 0;
+  align-items: center;
 }
-
-.message-board {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  max-height: 340px;
-  overflow-y: auto;
-  padding-top: 16px;
-}
-
-.message {
-  font-size: 85%;
-  margin-bottom: 8px;
-  animation: moveUpIn 2s ease-out;
-}
-
-.message-text {
-  padding: 2px 6px;
-}
-
-.message-mine {
+.game-timeline__round-number {
+  min-width: 20px;
+  color: #ffffff;
   text-align: right;
-  margin-right: 8px;
-}
-.message-mine .message-text {
-  background: #fff;
-  border-radius: 16px 16px 1px 16px;
-}
-
-.message-their {
-  text-align: left;
-}
-.message-their .message-text {
-  background: #dedede;
-  border-radius: 1px 16px 16px 16px;
 }
 
 .codename {

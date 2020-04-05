@@ -1,12 +1,35 @@
 .game-actions {
+  box-sizing: border-box;
+
   &__actions {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+
     padding: $unit2;
+    height: 100%;
+
+    &--clue-giving {
+      flex-direction: column;
+
+      & > div {
+        margin-top: $unit1;
+      }
+
+      & > button {
+        margin-top: $unit2;
+      }
+    }
+
+    &--guessing {
+      align-items: center;
+    }
+
+    &--setup {
+      align-items: center;
+    }
 
     &--waiting {
-      // background: red;
+      align-items: center;
     }
   }
 }

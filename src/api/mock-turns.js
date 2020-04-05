@@ -86,6 +86,13 @@ const mockTurns = (turnNumber) => {
         turn: 1,
         phase: 'clue-giving',
       };
+    case 2:
+      return {
+        ...basics,
+        timestamps: [now, now],
+        turn: 2,
+        phase: 'guessing',
+      };
     default:
       return {
         ...basics,

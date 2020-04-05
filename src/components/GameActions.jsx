@@ -26,9 +26,9 @@ const GameActions = () => {
   };
 
   return (
-    <div className="game-actions">
+    <div className="grid-actions game-actions">
       {game.phase === 'setup' && (
-        <div className="game-actions__actions">
+        <div className="game-actions__actions game-actions__actions--setup">
           <Button
             className="mui-block"
             variant="contained"
@@ -42,7 +42,7 @@ const GameActions = () => {
       )}
 
       {game.phase === 'clue-giving' && gameEngine.turnRole === 'active' && (
-        <div className="game-actions__actions">
+        <div className="game-actions__actions game-actions__actions--clue-giving">
           <TextField
             className="block"
             id="clue"
@@ -70,7 +70,7 @@ const GameActions = () => {
       )}
 
       {game.phase === 'guessing' && gameEngine.turnRole === 'passive' && (
-        <div className="game-actions__actions">
+        <div className="game-actions__actions game-actions__actions--guessing">
           <Button
             className="block"
             variant="contained"

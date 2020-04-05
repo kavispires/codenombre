@@ -67,7 +67,7 @@ const GameChat = () => {
   };
 
   return (
-    <div className="game-chat">
+    <div className="grid-chat game-chat">
       <div className="message-board">
         {messages.map((messageEntry, index) => {
           if (messageEntry.user === 'me') {
@@ -89,7 +89,6 @@ const GameChat = () => {
           );
         })}
       </div>
-      <GameActions />
     </div>
   );
 };
