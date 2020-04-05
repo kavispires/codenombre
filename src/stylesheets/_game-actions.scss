@@ -1,0 +1,12 @@
+.game-actions {
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: $unit2;
+
+    &--waiting {
+      // background: red;
+    }
+  }
+}

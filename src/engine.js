@@ -8,7 +8,15 @@ const ONE_MINUTE = 60000;
 
 const dialogs = {
   setup:
-    'Analyse the cards.<br>When you think you have a good clue in mind, press "I want to start"!',
+    'Analyse the codenames.<br>Your goal is to help your ally to find as many agents (cards) on their side.<br>When you think you have a good clue in mind, press "I want to start"!',
+  giveClue:
+    "Come up with a one-word clue and the number of cards that match your clue.<br>Watch out for matching Assassins (black-bordered cards), if your ally selects one of them, it's game over.",
+  waitClue:
+    'Waiting for your ally to come up with a clue that matches as many codenames as possible.<br>Stay in position!',
+  makeGuess:
+    "Check the message board for your clue. The number is how many codenames match the clue.<br>Don't fail me agent! Click on the cards you think are a match. You need to make at least one guess to be able to pass.",
+  waitGuess:
+    'Your ally is trying to make contact with the spies.<br>Was your clue clear enough? Wait and see',
 };
 
 class GameEngine {
@@ -41,19 +49,35 @@ class GameEngine {
   }
 
   /**
-   * Determines the index of the oppoent in the players array
+   * Determines the index of the ally in the players array
    * @type  {string}
    */
-  get opponentIndex() {
-    return this.players.findIndex((p) => p !== this.me);
+  get allyDatabaseIndex() {
+    return this.turnOrder.findIndex((p) => p !== this.me);
+  }
+
+  /**
+   * Determines the index of the player in the turn order array
+   * @type  {string}
+   */
+  get myTurnIndex() {
+    return this.turnOrder.findIndex((p) => p === this.me);
+  }
+
+  /**
+   * Determines the index of the player in the turn order array
+   * @type  {string}
+   */
+  get myAllyIndex() {
+    return this.turnOrder.findIndex((p) => p !== this.me);
   }
 
   /**
    * Returns the name of the other player or OP
    * @type  {string}
    */
-  get opponentsName() {
-    return this.players[this.opponentIndex] || 'OP';
+  get allysName() {
+    return this.players[this.allyDatabaseIndex] || 'OP';
   }
 
   /**
@@ -92,12 +116,21 @@ class GameEngine {
     };
   }
 
-  get dialog() {
-    if (this.phase === 'setup') {
-      return dialogs.setup;
-    }
+  get turnRole() {
+    return this.turn % 2 === this.myTurnIndex ? 'passive' : 'active';
+  }
 
-    return '';
+  get dialog() {
+    switch (this.phase) {
+      case 'setup':
+        return dialogs.setup;
+      case 'clue-giving':
+        return this.turnRole === 'active' ? dialogs.giveClue : dialogs.waitClue;
+      case 'guessing':
+        return this.turnRole === 'active' ? dialogs.makeGuess : dialogs.waitGuess;
+      default:
+        return '';
+    }
   }
 
   /**
@@ -125,13 +158,17 @@ class GameEngine {
   }
 
   delaySave() {
-    this._interval = setInterval(() => {
-      if (this._dbRef) {
-        this.save({ ...this._tempSaveObj });
-        this._tempSaveObj = null;
-        clearInterval(this._interval);
-      }
-    }, 1000);
+    if (!this._interval) {
+      this._interval = setInterval(() => {
+        if (this._dbRef) {
+          this.save({ ...this._tempSaveObj });
+          this._tempSaveObj = null;
+          clearInterval(this._interval);
+        }
+      }, 1000);
+    } else {
+      console.warn('There`s already a save interval running');
+    }
   }
 
   save(dataObj = {}) {
@@ -193,6 +230,8 @@ class GameEngine {
     this.timestamps = data.timestamps || [0, 0];
     this.turn = data.turn;
     this.phase = data.phase;
+    this.turnOrder = data.turnOrder || [];
+
     this.messages = data.messages;
 
     this.codenames = data.codenames;

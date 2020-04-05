@@ -11,19 +11,12 @@
 @import './waiting-room';
 @import './game-session';
 @import './game-timeline';
+@import './game-actions';
 
 @import './codenames';
 @import './chat';
 
 @import './card';
-
-.loading-page {
-  height: 98vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 
 .codenames-grid {
   flex: 1;

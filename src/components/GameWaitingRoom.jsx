@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { green } from '@material-ui/core/colors';
 
 import gameEngine from '../engine';
 import toastService from '../toastService';
@@ -36,7 +37,6 @@ const GameWaitingRoom = () => {
     }
 
     if (isEveryoneOnline(online)) {
-      console.log('HERE');
       setScreen('game.stage.setup');
       setDialog({ isVisible: true, duration: 'long', message: gameEngine.dialog });
     }
@@ -44,7 +44,7 @@ const GameWaitingRoom = () => {
 
   return (
     <div className="game-content game-waiting-room">
-      <CircularProgress />
+      <CircularProgress style={{ color: green[500] }} />
       <div className="game-waiting-room__message">Hi, {nickname}</div>
       <div className="game-waiting-room__message">Waiting for another player to join...</div>
     </div>

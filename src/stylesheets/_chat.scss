@@ -1,7 +1,8 @@
 .game-chat {
   width: $sidePanelWidth;
+  min-height: $sidePanelMinHeight;
   background: $color-brown;
-  background: #837065;
+
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -11,30 +12,28 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  // justify-content: flex-end;
   max-height: 340px;
   overflow-y: auto;
-  padding-top: 15px;
+  padding-top: $unit3;
 }
 
 .message {
-  // border-radious:
-  font-size: 80%;
-  margin-bottom: 6px;
+  font-size: 85%;
+  margin-bottom: $unit2;
   animation: moveUpIn 2s ease-out;
 }
 
 .message-text {
   padding: 2px 6px;
-  border-radius: 10px;
 }
 
 .message-mine {
   text-align: right;
-  margin-right: 6px;
+  margin-right: $unit2;
 
   .message-text {
     background: #fff;
+    border-radius: $unit3 $unit3 1px $unit3;
   }
 }
 
@@ -43,5 +42,6 @@
 
   .message-text {
     background: #dedede;
+    border-radius: 1px $unit3 $unit3 $unit3;
   }
 }

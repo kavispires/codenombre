@@ -1,11 +1,8 @@
-import React from 'react';
-import { TextField, Button } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+import React, { useState } from 'react';
 
-import gameEngine from '../engine';
 import useGlobalState from '../useGlobalState';
 
-const NOOP = () => console.log('OK');
+import GameActions from './GameActions';
 
 function buildMessagesMock() {
   const clues = [
@@ -54,7 +51,20 @@ function buildMessagesMock() {
 const messages = buildMessagesMock();
 
 const GameChat = () => {
+  // Global state
   const [game] = useGlobalState('game');
+  // Local state
+  const [clue, setClue] = useState({ clue: null, number: null });
+
+  const handleClue = (type, value) => {
+    if (value) {
+      if (type === 'clue') {
+        setClue({ ...clue, clue: value });
+      } else if (type === 'number') {
+        setClue({ ...clue, number: value });
+      }
+    }
+  };
 
   return (
     <div className="game-chat">
@@ -79,31 +89,7 @@ const GameChat = () => {
           );
         })}
       </div>
-      <div className="message-actions">
-        <div className="game-timeline__actions">
-          {game.phase === 'setup' && (
-            <Button
-              className="mui-block"
-              variant="contained"
-              color="primary"
-              style={{ background: green[500] }}
-              onClick={() => gameEngine.setTurnOrder()}
-            >
-              I want to start!
-            </Button>
-          )}
-        </div>
-        <TextField className="block" required id="game-id" label="Clue" onChange={() => NOOP()} />
-        <Button
-          className="block"
-          variant="contained"
-          color="primary"
-          disabled={false}
-          onClick={() => NOOP()}
-        >
-          OK
-        </Button>
-      </div>
+      <GameActions />
     </div>
   );
 };

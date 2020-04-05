@@ -1,13 +1,13 @@
 .game-timeline {
   width: $sidePanelWidth;
+  min-height: $sidePanelMinHeight;
   background: $color-brown;
+
   display: flex;
   flex-direction: column;
-
+  justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  min-height: 75vh;
-  justify-content: space-between;
 
   &__title {
     background: $color-white;

@@ -12,7 +12,7 @@ import OnlineBadge from './OnlineBadge';
 const GameHeader = ({ gameID }) => {
   const [online] = useGlobalState('online');
 
-  const opponentShortNickname = gameEngine.opponentsName.substring(0, 2);
+  const allyShortNickname = gameEngine.allysName.substring(0, 2);
 
   return (
     <AppBar className="header header--flex" position="static">
@@ -27,7 +27,7 @@ const GameHeader = ({ gameID }) => {
         <div className="header__military-translation">{getMilitaryTranslation(gameID)}</div>
       </div>
       <div className="header__right-area">
-        <OnlineBadge name={opponentShortNickname} isOnline={online[gameEngine.opponentIndex]} />
+        <OnlineBadge name={allyShortNickname} isOnline={online[gameEngine.allyDatabaseIndex]} />
         <OnlineBadge name="Me" isOnline={online[gameEngine.myDatabaseIndex]} />
       </div>
     </AppBar>

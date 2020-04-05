@@ -49,6 +49,11 @@ const HomeJoin = ({ tempGameID, setTempGameID, tempNickname }) => {
       setIsValidGameID(false);
     }
 
+    if (tempGameID === gameID) {
+      setIsValidGameID(true);
+      setErrorGameID('');
+    }
+
     // Check if nickname is valid
     if (nickname?.length >= 3 || tempNickname?.length >= 3) {
       setIsValidNickname(true);
@@ -85,6 +90,7 @@ const HomeJoin = ({ tempGameID, setTempGameID, tempNickname }) => {
         defaultValue={tempGameID}
         onChange={(e) => setTempGameID(e.target.value)}
         helperText={errorGameID}
+        inputProps={{ maxLength: '4' }}
       />
       <TextField
         className="mui-full-width"
@@ -93,12 +99,13 @@ const HomeJoin = ({ tempGameID, setTempGameID, tempNickname }) => {
         label="Nickname"
         defaultValue={tempNickname}
         onChange={(e) => setNickname(e.target.value)}
+        inputProps={{ maxLength: '8' }}
         helperText={
           nickname && !isValidNickname ? 'Nickname must be at least 3 characters long.' : ''
         }
       />
 
-      <div>{isLoading && <LinearProgress />}</div>
+      <div>{isLoading && <LinearProgress style={{ background: green[800] }} />}</div>
 
       <Button
         className="mui-block"

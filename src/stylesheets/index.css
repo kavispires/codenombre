@@ -131,10 +131,10 @@ body {
   height: 8px;
   position: absolute;
   background: #025002;
-  animation: retractToZero 6s linear;
+  animation: retractToZero 6s linear infinite;
 }
 .popup-timeleft__bar--long {
-  animation: retractToZero 12s linear;
+  animation: retractToZero 12s linear infinite;
 }
 
 .home {
@@ -198,13 +198,13 @@ body {
 
 .game-timeline {
   width: 17%;
+  min-height: 75vh;
   background: #837065;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  min-height: 75vh;
-  justify-content: space-between;
 }
 .game-timeline__title {
   background: #ffffff;
@@ -247,9 +247,16 @@ body {
   margin-top: 0;
 }
 
+.game-actions__actions {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 8px;
+}
+
 .game-chat {
   width: 17%;
-  background: #837065;
+  min-height: 75vh;
   background: #837065;
   display: flex;
   flex-direction: column;
@@ -262,26 +269,26 @@ body {
   flex-direction: column;
   max-height: 340px;
   overflow-y: auto;
-  padding-top: 15px;
+  padding-top: 16px;
 }
 
 .message {
-  font-size: 80%;
-  margin-bottom: 6px;
+  font-size: 85%;
+  margin-bottom: 8px;
   animation: moveUpIn 2s ease-out;
 }
 
 .message-text {
   padding: 2px 6px;
-  border-radius: 10px;
 }
 
 .message-mine {
   text-align: right;
-  margin-right: 6px;
+  margin-right: 8px;
 }
 .message-mine .message-text {
   background: #fff;
+  border-radius: 16px 16px 1px 16px;
 }
 
 .message-their {
@@ -289,6 +296,7 @@ body {
 }
 .message-their .message-text {
   background: #dedede;
+  border-radius: 1px 16px 16px 16px;
 }
 
 .codename {
@@ -322,14 +330,6 @@ body {
   width: 100%;
   text-align: center;
   font-style: italic;
-}
-
-.loading-page {
-  height: 98vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .codenames-grid {
