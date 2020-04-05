@@ -217,14 +217,8 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0;
-}
-
-.message-board {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  max-height: 380px;
+  justify-content: flex-end;
+  height: 380px;
   overflow-y: auto;
   padding-top: 16px;
 }

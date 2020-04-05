@@ -25,6 +25,12 @@ const GameActions = () => {
     }
   };
 
+  const handleSubmitClue = () => {
+    gameEngine.submitClue(clue);
+  };
+
+  const isClueReady = clue.clue && !clue.clue.includes(' ') && clue.number >= 0;
+
   return (
     <div className="grid-actions game-actions">
       {game.phase === 'setup' && (
@@ -47,22 +53,23 @@ const GameActions = () => {
             className="block"
             id="clue"
             label="Clue"
+            inputProps={{ autocomplete: 'off' }}
             onChange={(e) => handleClue('clue', e.target.value)}
           />
           <TextField
             id="filled-number"
             label="Number"
             type="number"
-            inputProps={{ min: '0', max: '10', step: '1' }}
+            inputProps={{ min: '0', max: '25', step: '1' }}
             onChange={(e) => handleClue('number', +e.target.value)}
           />
           <Button
             className="block"
             variant="contained"
             color="primary"
-            disabled={false}
+            disabled={!isClueReady}
             style={{ background: green[500] }}
-            onClick={() => NOOP()}
+            onClick={handleSubmitClue}
           >
             <SendIcon />
           </Button>

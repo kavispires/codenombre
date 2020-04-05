@@ -40,6 +40,8 @@ class GameEngine {
     this._interval = null;
   }
 
+  // GETTERS
+
   /**
    * Determines the index of the player in the players array
    * @type  {string}
@@ -97,29 +99,17 @@ class GameEngine {
   }
 
   /**
-   * State to be used by the game global state
-   * @type  {string}
+   * Determines if player has an active or passive action depending on the turn
+   * @type  {string} passive or active
    */
-  get state() {
-    return {
-      gameID: this.gameID,
-      mode: this.mode,
-      difficulty: this.difficulty,
-      players: this.players,
-      timestamps: this.timestamps,
-      turn: this.turn,
-      phase: this.phase,
-      messages: this.messages,
-      turnOrder: this.turnOrder,
-      codenames: this.codenames,
-      keyCard: this.keyCard,
-    };
-  }
-
   get turnRole() {
     return this.turn % 2 === this.myTurnIndex ? 'passive' : 'active';
   }
 
+  /**
+   * Determines the current dialog according to phase and turn role
+   * @type  {string}
+   */
   get dialog() {
     switch (this.phase) {
       case 'setup':
@@ -132,6 +122,28 @@ class GameEngine {
         return '';
     }
   }
+
+  /**
+   * State to be used by the game global state
+   * @type  {string}
+   */
+  get state() {
+    return {
+      gameID: this.gameID,
+      mode: this.mode,
+      difficulty: this.difficulty,
+      players: this.players,
+      timestamps: this.timestamps,
+      turn: this.turn,
+      phase: this.phase,
+      messages: this.messages || [],
+      turnOrder: this.turnOrder,
+      codenames: this.codenames,
+      keyCard: this.keyCard,
+    };
+  }
+
+  // METHORDS
 
   /**
    * Sets basic info and calls setup function to prepare game
@@ -188,39 +200,6 @@ class GameEngine {
     });
   }
 
-  num = 1;
-
-  setDbRef(dbRef) {
-    if (!this._dbRef) {
-      this._dbRef = dbRef;
-    }
-  }
-
-  setGameID(gameID) {
-    this.gameID = gameID;
-  }
-
-  setPlayer(nickname) {
-    this.me = nickname;
-
-    if (this.isGameFull) {
-      throw Error('Game is full, try a different game ID');
-    }
-
-    if (!this.players.includes(nickname)) {
-      this.players.push(nickname);
-      this.save({ players: this.players });
-    } else {
-      this.save();
-    }
-  }
-
-  setMe(nickname) {
-    if (!this.me) this.me = nickname;
-
-    this.save();
-  }
-
   update(data) {
     console.log('%cUpdating game...', 'background:GreenYellow', data);
     this.gameID = data.gameID;
@@ -232,7 +211,7 @@ class GameEngine {
     this.phase = data.phase;
     this.turnOrder = data.turnOrder || [];
 
-    this.messages = data.messages;
+    this.messages = data.messages || [];
 
     this.codenames = data.codenames;
     this.keyCard = data.keyCard;
@@ -261,12 +240,61 @@ class GameEngine {
     this.codenames = getRandomItems(WORDS, gridLength);
   }
 
+  // SETTERS
+
+  setDbRef(dbRef) {
+    if (!this._dbRef) {
+      this._dbRef = dbRef;
+    }
+  }
+
+  setGameID(gameID) {
+    this.gameID = gameID;
+  }
+
+  // SAVERS
+
+  setPlayer(nickname) {
+    this.me = nickname;
+
+    if (this.isGameFull) {
+      throw Error('Game is full, try a different game ID');
+    }
+
+    if (!this.players.includes(nickname)) {
+      this.players.push(nickname);
+      this.save({ players: this.players });
+    } else {
+      this.save();
+    }
+  }
+
+  setMe(nickname) {
+    if (!this.me) this.me = nickname;
+
+    this.save();
+  }
+
   setTurnOrder() {
     const turnOrder = this.myDatabaseIndex === 0 ? [...this.players] : [...this.players].reverse();
     this.save({
       turnOrder,
       turn: this.turn + 1,
       phase: 'clue-giving',
+    });
+  }
+
+  submitClue(clueObj) {
+    this.save({
+      phase: 'guessing',
+      messages: [
+        ...this.messages,
+        {
+          clue: clueObj.clue,
+          number: clueObj.number || 0,
+          player: this.me,
+        },
+      ],
     });
   }
 

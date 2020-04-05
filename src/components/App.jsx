@@ -26,9 +26,11 @@ const App = () => {
       <PopUp />
       {process.env.NODE_ENV === 'development' && (
         <div className="mock-buttons">
-          <button onClick={() => gameEngine.mock(0)}>Mock Setup</button>
-          <button onClick={() => gameEngine.mock(1)}>Mock Round 1</button>
-          <button onClick={() => gameEngine.mock(2)}>Mock Round 2</button>
+          <button onClick={() => gameEngine.mock('setup')}>Mock Setup</button>
+          <button onClick={() => gameEngine.mock('turn1.clue-giving')}>Mock 1 clue</button>
+          <button onClick={() => gameEngine.mock('turn1.guessing')}>Mock 1 guessing</button>
+          <button onClick={() => gameEngine.mock('turn2.clue-giving')}>Mock 2 clue</button>
+          <button onClick={() => gameEngine.mock('turn2.guessing')}>Mock 2 guessing</button>
         </div>
       )}
     </Fragment>
