@@ -341,9 +341,20 @@ body {
 
 .codename {
   position: relative;
+  font-size: 1em;
 }
 .codename--5 {
   width: 19%;
+}
+.codename--button {
+  background: pink;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+.codename--button:hover {
+  transform: scale(0.9);
 }
 .codename__background {
   width: 100%;
@@ -366,7 +377,7 @@ body {
   text-transform: uppercase;
   transform: rotate(180deg);
   opacity: 0.5;
-  font-size: 60%;
+  font-size: 70%;
   width: 100%;
   text-align: center;
   font-style: italic;

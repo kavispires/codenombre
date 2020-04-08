@@ -1,7 +1,6 @@
 import React from 'react';
 
 import gameEngine from '../engine';
-import useGlobalState from '../useGlobalState';
 
 const GameInstructions = () => {
   const texts = gameEngine.dialog.split('<br>');

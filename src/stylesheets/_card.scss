@@ -5,8 +5,22 @@
   // text-align: center;
   position: relative;
 
+  font-size: 1em;
+
   &--5 {
     width: 19%;
+  }
+
+  &--button {
+    background: pink;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+
+    &:hover {
+      transform: scale(0.9);
+    }
   }
 
   // &--assassin {
@@ -44,7 +58,7 @@
     text-transform: uppercase;
     transform: rotate(180deg);
     opacity: 0.5;
-    font-size: 60%;
+    font-size: 70%;
     width: 100%;
     text-align: center;
     font-style: italic;

@@ -6,7 +6,7 @@ import useGlobalState from '../useGlobalState';
 import GameTimeline from './GameTimeline';
 import GameInstructions from './GameInstructions';
 import GameChat from './GameChat';
-import GameStage from './GameStage';
+import GameBoard from './GameBoard';
 import GameActions from './GameActions';
 
 const GameSession = () => {
@@ -23,7 +23,7 @@ const GameSession = () => {
     <div className="game-content game-session">
       <GameTimeline />
       <GameInstructions />
-      <GameStage />
+      <GameBoard />
       <GameChat />
       <GameActions />
     </div>

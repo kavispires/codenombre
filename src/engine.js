@@ -17,6 +17,8 @@ const dialogs = {
     "Check the message board for your clue. The number is how many codenames match the clue.<br>Don't fail me agent! Click on the cards you think are a match. You need to make at least one guess to be able to pass.",
   waitGuess:
     'Your ally is trying to make contact with the spies.<br>Was your clue clear enough? Wait and see',
+  wrongGuess: 'Your ally selected the WRONG agent!',
+  myWrongGuess: 'You selected the WRONG agent!',
 };
 
 class GameEngine {
@@ -35,6 +37,7 @@ class GameEngine {
     this.phase = 'setup';
     this.messages = [];
     this.codenames = [];
+    this.guesses = {};
 
     this._tempSaveObj = null;
     this._interval = null;
@@ -118,6 +121,8 @@ class GameEngine {
         return this.turnRole === 'active' ? dialogs.giveClue : dialogs.waitClue;
       case 'guessing':
         return this.turnRole === 'active' ? dialogs.makeGuess : dialogs.waitGuess;
+      case 'wrong-guess':
+        return this.turnRole === 'active' ? dialogs.wrongGuess : dialogs.myWrongGuess;
       default:
         return '';
     }
@@ -297,6 +302,38 @@ class GameEngine {
       ],
     });
   }
+
+  submitGuess(guessIndex) {
+    // Check if guess is result
+    const guessResult = this.keyCard[guessIndex][this.allyDatabaseIndex];
+    console.log('key', this.keyCard[guessIndex]);
+    console.log('myGuess', guessResult);
+    //
+    switch (guessResult) {
+      case 'A':
+        console.log('CASE A');
+        // this.save({
+        //   turn: 0,
+        //   phase: 'gameover',
+        //   // TO-DO: determine what side made the mistake
+        // });
+        break;
+      case 'G':
+        console.log('CASE G');
+        // Save guess
+        break;
+      case 'B':
+        console.log('CASE B');
+        // Save guess
+        // Force pass
+        break;
+      default:
+        console.log('CASE ?');
+      // do nothing
+    }
+  }
+
+  pass() {}
 
   mock(turnNumber) {
     this.save(mockTurns(turnNumber));
