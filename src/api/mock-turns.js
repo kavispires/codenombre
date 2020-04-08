@@ -66,25 +66,91 @@ const basics = {
   turn: 0,
   phase: 'setup',
   mock: true,
+  messages: [],
 };
 
-const mockTurns = (turnNumber) => {
+const mockMessages = (num) => {
+  const clues = [
+    'pandemic',
+    'bagel',
+    'store',
+    'purchase',
+    'nine',
+    'investigator',
+    'body',
+    'morning',
+    'mother',
+    'daisy',
+    'son',
+    'love',
+    'date',
+    'drink',
+    'drugs',
+    'fabric',
+    'rigid',
+    'see',
+    'detail',
+    'information',
+    'palm',
+    'print',
+    'alaska',
+    'headphones',
+    'table',
+    'tomato',
+    'clue',
+    'amazing',
+  ];
+
+  return new Array(num).fill(' ').map((entry, index) => {
+    return {
+      clue: clues[index],
+      number: Math.floor(Math.random() * 4),
+      user: basics.turnOrder[index % 2],
+    };
+  });
+};
+
+const mockTurns = (set) => {
   const now = Date.now();
 
-  switch (turnNumber) {
-    case 0:
+  switch (set) {
+    case 'setup':
       return {
         ...basics,
         timestamps: [now, now],
         turn: 0,
         phase: 'setup',
       };
-    case 1:
+    case 'turn1.clue-giving':
       return {
         ...basics,
         timestamps: [now, now],
         turn: 1,
         phase: 'clue-giving',
+      };
+    case 'turn1.guessing':
+      return {
+        ...basics,
+        timestamps: [now, now],
+        turn: 1,
+        phase: 'guessing',
+        messages: mockMessages(1),
+      };
+    case 'turn2.clue-giving':
+      return {
+        ...basics,
+        timestamps: [now, now],
+        turn: 2,
+        phase: 'clue-giving',
+        messages: mockMessages(20),
+      };
+    case 'turn2.guessing':
+      return {
+        ...basics,
+        timestamps: [now, now],
+        turn: 2,
+        phase: 'guessing',
+        messages: mockMessages(2),
       };
     default:
       return {

@@ -2,20 +2,16 @@ import React from 'react';
 import FolderSpecial from '@material-ui/icons/FolderSpecial';
 import { green, yellow } from '@material-ui/core/colors';
 
-import gameEngine from '../engine';
 import useGlobalState from '../useGlobalState';
 
 const rounds = new Array(11).fill(null).map((c, i) => i + 1);
 
-const GameTimeTrack = () => {
+const GameTimeline = () => {
   // Global States
   const [game] = useGlobalState('game');
 
-  const texts = gameEngine.dialog.split('<br>');
-
   return (
-    <div className="game-timeline">
-      <div className="game-timeline__title">Round Tracker</div>
+    <div className="grid-timeline game-timeline">
       {rounds.map((round, index) => (
         <div key={`counter-${round}-${index}`} className="game-timeline__round">
           <span className="game-timeline__round-number">{round}</span>
@@ -26,13 +22,8 @@ const GameTimeTrack = () => {
           />
         </div>
       ))}
-      <div className="dialog-box">
-        {texts.map((text) => (
-          <p key={text}>{text}</p>
-        ))}
-      </div>
     </div>
   );
 };
 
-export default GameTimeTrack;
+export default GameTimeline;

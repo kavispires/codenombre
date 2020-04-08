@@ -14,10 +14,10 @@
     height: $unit2;
     position: absolute;
     background: $color-green;
-    animation: retractToZero 6s linear;
+    animation: retractToZero 6s linear infinite;
 
     &--long {
-      animation: retractToZero 12s linear;
+      animation: retractToZero 12s linear infinite;
     }
   }
 }

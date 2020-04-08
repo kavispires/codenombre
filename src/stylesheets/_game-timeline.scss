@@ -1,9 +1,15 @@
 .game-timeline {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: $unit2;
+
   &__title {
     background: $color-white;
     padding: 4px;
     border-radius: 4px;
-    color: black;
+    color: $color-black;
   }
 
   &__round {
@@ -16,12 +22,4 @@
     color: $color-white;
     text-align: right;
   }
-}
-
-.dialog-box {
-  margin: $unit2 $unit2 $unit2 $unit3;
-  background: $color-white;
-  font-size: 80%;
-  padding: $unit2;
-  text-align: center;
 }

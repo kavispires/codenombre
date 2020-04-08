@@ -1,7 +1,5 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
-import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import Cached from '@material-ui/icons/Cached';
 
@@ -9,8 +7,12 @@ import gameEngine from '../engine';
 import useGlobalState from '../useGlobalState';
 import { getMilitaryTranslation } from '../utils';
 
+import OnlineBadge from './OnlineBadge';
+
 const GameHeader = ({ gameID }) => {
   const [online] = useGlobalState('online');
+
+  const allyShortNickname = gameEngine.allysName.substring(0, 2);
 
   return (
     <AppBar className="header header--flex" position="static">
@@ -25,34 +27,8 @@ const GameHeader = ({ gameID }) => {
         <div className="header__military-translation">{getMilitaryTranslation(gameID)}</div>
       </div>
       <div className="header__right-area">
-        <Badge
-          color="secondary"
-          overlap="circle"
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          variant="dot"
-          className={`badge ${
-            online[gameEngine.myDatabaseIndex] ? 'badge--online' : 'badge--offline'
-          }`}
-        >
-          <Avatar>Me</Avatar>
-        </Badge>
-        <Badge
-          color="secondary"
-          overlap="circle"
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          variant="dot"
-          className={`badge ${
-            online[gameEngine.opponentIndex] ? 'badge--online' : 'badge--offline'
-          }`}
-        >
-          <Avatar>Op</Avatar>
-        </Badge>
+        <OnlineBadge name={allyShortNickname} isOnline={online[gameEngine.allyDatabaseIndex]} />
+        <OnlineBadge name="Me" isOnline={online[gameEngine.myDatabaseIndex]} />
       </div>
     </AppBar>
   );
